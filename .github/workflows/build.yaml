@@ -23,14 +23,14 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
       - run: nimble build -d:release -Y
       - run: nimble install -Y
-      - run: nim_ci_sample 10
-      - run: nimble doc --project --index:on -o:docs src/nim_ci_sample.nim
+      - run: NimScry
+      - run: nimble doc --project --index:on -o:docs src/NimScry.nim
       - name: Create artifact
-        run: tar czf nim_ci_sample_${{ runner.os }}.tar.gz README.md nim_ci_sample
+        run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry
       - name: Release binary
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: nim_ci_sample*.tar.gz
+          files: NimScry*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
