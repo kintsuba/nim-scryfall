@@ -23,7 +23,7 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
       - run: nimble build -d:release -Y
       - run: nimble install -Y
-      - run: NimScry
+      - run: NimScry sample.txt
       - run: nimble doc --project --index:on -o:docs src/NimScry.nim
       - name: Create artifact
         run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry
