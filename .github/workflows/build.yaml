@@ -41,7 +41,7 @@ jobs:
       run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry sample.txt
 
     - name: Create artifact - Win
-      if: runner.os == 'Windoes'
+      if: runner.os == 'Windows'
       run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry.exe sample.txt
 
     - name: Release binary
