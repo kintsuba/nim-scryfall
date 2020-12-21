@@ -2,7 +2,6 @@
 # uses this file as the main entry point of the application.
 import os, json
 import strutils
-from httpclient import HttpRequestError
 import scryfall
 
 proc main() =
@@ -15,6 +14,8 @@ proc main() =
       
   let listFilePath = $os.commandLineParams()[0]
   let listFile = open(listFilePath ,FileMode.fmRead)
+  var result : string
+
   try:
     while not listFile.endOfFile:
       let taintedLine = listFile.readLine
@@ -28,16 +29,27 @@ proc main() =
 
       if jpCard["object"].getStr == "nil":
         downloadImage(card["image_uris"]["png"].getStr, card["name"].getStr & ".png")
-        echo card["name"].getStr & " → " & "Downloaded. (en)"
+        let msg = card["name"].getStr & " → " & "Downloaded. (en)"
+        echo msg
+        result = result.join(msg & "\n")
       else:
         downloadImage(jpCard["image_uris"]["png"].getStr, jpCard["printed_name"].getStr & ".png")
-        echo jpCard["printed_name"].getStr & " → " & "Downloaded. (ja)"
+        let msg = jpCard["printed_name"].getStr & " → " & "Downloaded. (ja)"
+        echo msg
+        result = result & msg & "\n"
 
       sleep(100)
       
   finally:
     close(listFile)
+
+  block:
+    let resultFile = open("result.txt" ,FileMode.fmWrite)
+    defer :
+      close(resultFile)
+    resultFile.write(result)
   
-  sleep(2000)
+  echo "Download has completed. Please check result.txt"
+  sleep(3000)
 
 main()

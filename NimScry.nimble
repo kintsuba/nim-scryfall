@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.2.0"
 author        = "kintsuba"
 description   = "NimScry"
 license       = "MIT"
@@ -12,4 +12,3 @@ bin           = @["NimScry"]
 # Dependencies
 
 requires "nim >= 0.10.2"
-requires "yaml"
