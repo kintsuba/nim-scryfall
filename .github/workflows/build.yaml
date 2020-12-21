@@ -36,7 +36,11 @@ jobs:
     - run: NimScry sample.txt
     - run: nimble doc --project --index:on -o:docs src/NimScry.nim
     - name: Create artifact
+      if: runner.os == 'ubuntu-latest'
       run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry sample.txt
+    - name: Create artifact - Win
+      if: runner.os == 'windows-latest'
+      run: tar czf NimScry_${{ runner.os }}.tar.gz README.md NimScry.exe sample.txt
     - name: Release binary
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
